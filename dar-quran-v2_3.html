@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دار القرآن الكريم</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --ink: #1c1a14;
+  --ink-2: #3d3a2e;
+  --ink-3: #7a7568;
+  --ink-4: #b5b0a0;
+  --parchment: #faf7f0;
+  --parchment-2: #f2ede0;
+  --parchment-3: #e8e0cc;
+  --emerald: #1a5c3a;
+  --emerald-2: #2a7d52;
+  --emerald-3: #3da06d;
+  --emerald-pale: #eaf5ef;
+  --gold: #b8922a;
+  --gold-2: #d4aa3f;
+  --gold-pale: #fdf5e0;
+  --ruby: #8b2020;
+  --ruby-pale: #fdf0f0;
+  --border: rgba(28,26,20,0.12);
+  --border-2: rgba(28,26,20,0.06);
+  --shadow-sm: 0 1px 4px rgba(28,26,20,0.08);
+  --shadow: 0 4px 20px rgba(28,26,20,0.10);
+  --shadow-lg: 0 8px 40px rgba(28,26,20,0.14);
+  --r: 14px;
+  --r-sm: 10px;
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--parchment);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* SCREENS */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ============================
+   SCREEN: LOGIN
+   ============================ */
+#screen-login {
+  align-items: center;
+  justify-content: center;
+  background: var(--emerald);
+  position: relative;
+  overflow: hidden;
+}
+
+#screen-login::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px);
+  pointer-events: none;
+}
+
+.login-card {
+  background: var(--parchment);
+  border-radius: 24px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.login-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-emblem {
+  width: 80px;
+  height: 80px;
+  background: var(--emerald);
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Amiri Quran', serif;
+  font-size: 36px;
+  color: var(--gold-2);
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(26,92,58,0.3);
+}
+
+.login-logo h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--emerald);
+  margin-bottom: 4px;
+}
+
+.login-logo p {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.role-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--parchment-2);
+  border-radius: var(--r-sm);
+  padding: 4px;
+  margin-bottom: 24px;
+  gap: 4px;
+}
+
+.role-tab {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+  background: transparent;
+  color: var(--ink-3);
+}
+
+.role-tab.active {
+  background: var(--emerald);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-group { margin-bottom: 16px; }
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  background: white;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.form-input:focus { border-color: var(--emerald-3); background: white; }
+
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background: var(--emerald);
+  color: white;
+  border: none;
+  border-radius: var(--r-sm);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.btn-login:hover { background: var(--emerald-2); transform: translateY(-1px); }
+.btn-login:active { transform: translateY(0); }
+
+.hint-text {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-4);
+  margin-top: 16px;
+}
+
+/* ============================
+   STUDENT SCREEN
+   ============================ */
+#screen-student {
+  background: var(--parchment);
+}
+
+.student-header {
+  background: var(--emerald);
+  color: white;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.student-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.s-logo {
+  width: 34px;
+  height: 34px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Amiri Quran', serif;
+  font-size: 16px;
+  color: var(--gold-2);
+}
+
+.s-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.s-group {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.btn-logout {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-logout:hover { background: rgba(255,255,255,0.22); }
+
+.student-body {
+  flex: 1;
+  padding: 24px 20px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Quran ornament */
+.ornament {
+  text-align: center;
+  font-family: 'Amiri Quran', serif;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  margin-bottom: 24px;
+  opacity: 0.8;
+}
+
+.card {
+  background: white;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.card-head {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--emerald);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-body { padding: 20px; }
+
+/* Surah range picker */
+.surah-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.arrow-mid {
+  font-size: 20px;
+  color: var(--ink-4);
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group label { font-size: 12px; font-weight: 700; color: var(--ink-3); }
+.input-group select, .input-group input {
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--parchment);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.input-group select:focus, .input-group input:focus {
+  border-color: var(--emerald-3);
+  background: white;
+}
+
+/* Grade buttons */
+.grade-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.grade-btn {
+  padding: 10px 6px;
+  border: 2px solid var(--border);
+  border-radius: var(--r-sm);
+  background: white;
+  cursor: pointer;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-3);
+  text-align: center;
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+
+.grade-btn:hover { border-color: var(--emerald-3); color: var(--emerald); }
+
+.grade-btn.sel-excellent { border-color: var(--gold); background: var(--gold-pale); color: var(--gold); }
+.grade-btn.sel-good2 { border-color: var(--emerald-2); background: var(--emerald-pale); color: var(--emerald); }
+.grade-btn.sel-good { border-color: #1a7ba0; background: #e8f4f8; color: #1a5c7a; }
+.grade-btn.sel-review { border-color: var(--ruby); background: var(--ruby-pale); color: var(--ruby); }
+
+textarea.form-input {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  background: var(--emerald);
+  color: white;
+  border: none;
+  border-radius: var(--r-sm);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-submit:hover { background: var(--emerald-2); }
+
+/* History list */
+.history-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-2);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.history-item:last-child { border-bottom: none; }
+
+.h-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.h-dot.excellent { background: var(--gold); }
+.h-dot.good2 { background: var(--emerald-2); }
+.h-dot.good { background: #1a7ba0; }
+.h-dot.review { background: var(--ruby); }
+
+.h-content { flex: 1; }
+.h-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.h-sub { font-size: 12px; color: var(--ink-3); display: flex; gap: 10px; flex-wrap: wrap; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.badge-gold { background: var(--gold-pale); color: var(--gold); }
+.badge-green { background: var(--emerald-pale); color: var(--emerald); }
+.badge-blue { background: #e8f4f8; color: #1a5c7a; }
+.badge-red { background: var(--ruby-pale); color: var(--ruby); }
+.badge-gray { background: var(--parchment-2); color: var(--ink-3); }
+.badge-purple { background: #f0eaff; color: #5b21b6; }
+
+/* Attendance indicator */
+.attendance-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-2);
+}
+
+.attendance-row:last-child { border-bottom: none; }
+
+.att-date { font-size: 13px; color: var(--ink-3); flex: 1; }
+.att-status { font-size: 13px; font-weight: 700; }
+
+/* Teacher note badge */
+.teacher-note {
+  background: var(--emerald-pale);
+  border: 1px solid rgba(26,92,58,0.15);
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--emerald);
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+/* ============================
+   TEACHER SCREEN
+   ============================ */
+#screen-teacher {
+  background: var(--parchment);
+}
+
+.teacher-topbar {
+  background: var(--ink);
+  color: white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.t-logo {
+  width: 34px;
+  height: 34px;
+  background: var(--emerald);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Amiri Quran', serif;
+  font-size: 18px;
+  color: var(--gold-2);
+  flex-shrink: 0;
+}
+
+.t-brand { font-size: 15px; font-weight: 800; flex: 1; }
+
+.t-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.t-tab {
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.t-tab.active { background: var(--emerald); color: white; }
+.t-tab:hover:not(.active) { background: rgba(255,255,255,0.14); color: white; }
+
+.teacher-body {
+  flex: 1;
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Teacher sub-pages */
+.t-page { display: none; }
+.t-page.active { display: block; }
+
+/* Stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.stat-box {
+  background: white;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  padding: 18px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-num {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--emerald);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-lbl {
+  font-size: 12px;
+  color: var(--ink-3);
+  font-weight: 500;
+}
+
+/* 2-col layout */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .two-col { grid-template-columns: 1fr; }
+  .surah-grid { grid-template-columns: 1fr; }
+  .arrow-mid { display: none; }
+  .grade-grid { grid-template-columns: repeat(2, 1fr); }
+  .t-tabs { display: none; }
+  .teacher-body { padding: 16px; }
+}
+
+/* Session review row */
+.review-row {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-2);
+}
+
+.review-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.student-chip {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.review-name { font-size: 14px; font-weight: 700; flex: 1; }
+.review-meta { font-size: 13px; color: var(--ink-3); }
+
+.review-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--ink-2);
+}
+
+.btn-sm:hover { background: var(--parchment-2); }
+.btn-sm.green { border-color: var(--emerald-3); color: var(--emerald); }
+.btn-sm.green:hover { background: var(--emerald-pale); }
+.btn-sm.gold { border-color: var(--gold); color: var(--gold); }
+.btn-sm.gold:hover { background: var(--gold-pale); }
+.btn-sm.red { border-color: var(--ruby); color: var(--ruby); }
+.btn-sm.red:hover { background: var(--ruby-pale); }
+
+/* Attendance teacher view */
+.att-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.att-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.att-name { flex: 1; font-size: 14px; font-weight: 600; line-height: 1.3; }
+.att-name small { font-size: 11px; color: var(--ink-3); font-weight: 400; display: block; }
+
+.att-btns { display: flex; border-radius: 8px; overflow: hidden; border: 1.5px solid var(--border); }
+.att-btns button {
+  padding: 6px 12px;
+  border: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  background: white;
+  color: var(--ink-3);
+  transition: all 0.15s;
+}
+
+.att-btns button.present { background: #d1fae5; color: #065f46; }
+.att-btns button.absent { background: #fee2e2; color: #991b1b; }
+
+/* Students table */
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead th {
+  background: var(--parchment-2);
+  color: var(--emerald);
+  padding: 10px 14px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+tbody tr { border-bottom: 1px solid var(--border-2); transition: background 0.15s; }
+tbody tr:hover { background: #fafaf7; }
+tbody td { padding: 10px 14px; vertical-align: middle; }
+
+/* Inline textarea for teacher note */
+.note-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  resize: none;
+  outline: none;
+  min-height: 60px;
+  background: var(--parchment);
+  transition: border-color 0.2s;
+}
+
+.note-input:focus { border-color: var(--emerald-3); background: white; }
+
+/* AI button */
+.btn-ai {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #5b21b6, #7c3aed);
+  color: white;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-ai:hover { opacity: 0.85; }
+
+/* Add student form */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-overlay.hidden { display: none; }
+
+.modal {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeUp 0.3s ease;
+}
+
+.modal h2 { font-size: 18px; font-weight: 800; color: var(--emerald); margin-bottom: 20px; }
+
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.btn-row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+.btn-cancel {
+  padding: 10px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  background: white;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--ink-2);
+}
+
+.btn-save {
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--r-sm);
+  background: var(--emerald);
+  color: white;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-save:hover { background: var(--emerald-2); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  transition: transform 0.3s;
+  white-space: nowrap;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--ink-4);
+}
+
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty p { font-size: 14px; }
+
+/* AI suggestion box */
+.ai-box {
+  background: linear-gradient(135deg, #f5f0ff, #ede8ff);
+  border: 1.5px solid #c4b5fd;
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #4c1d95;
+  line-height: 1.7;
+}
+
+.ai-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #5b21b6;
+}
+
+/* Progress bar */
+.prog-bar {
+  height: 6px;
+  background: var(--parchment-3);
+  border-radius: 3px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--emerald-3), var(--emerald));
+  border-radius: 3px;
+}
+
+/* Greeting card */
+.greeting {
+  background: var(--emerald);
+  border-radius: var(--r);
+  padding: 20px 24px;
+  color: white;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.greeting-icon {
+  font-family: 'Amiri Quran', serif;
+  font-size: 36px;
+  opacity: 0.9;
+}
+
+.greeting h2 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.greeting p { font-size: 13px; opacity: 0.8; }
+
+/* Mobile nav for teacher */
+.mobile-nav {
+  display: none;
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 8px 0 4px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav { display: flex; justify-content: space-around; order: 3; }
+  .mobile-nav button {
+    flex: 1;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px;
+  }
+  .mobile-nav button.active { color: var(--gold-2); }
+  .mobile-nav button span:first-child { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== LOGIN ====== -->
+<div id="screen-login" class="screen active">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-emblem">ق</div>
+      <h1>دار القرآن الكريم</h1>
+      <p>نظام تتبع الحفظ والحضور</p>
+    </div>
+
+    <div class="role-tabs">
+      <button class="role-tab active" onclick="setRole('student')">🎓 طالب</button>
+      <button class="role-tab" onclick="setRole('teacher')">👨‍🏫 معلم</button>
+    </div>
+
+    <div id="login-student-form">
+      <div class="form-group">
+        <label class="form-label">اسم الطالب</label>
+        <select class="form-input" id="studentSelect">
+          <option value="">— اختر اسمك —</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="login-teacher-form" style="display:none">
+      <div class="form-group">
+        <label class="form-label">اسم المعلم</label>
+        <select class="form-input" id="teacherSelect">
+          <option value="">— اختر اسمك —</option>
+          <option value="t1">الأستاذ أحمد الخالدي</option>
+          <option value="t2">الأستاذة فاطمة النجار</option>
+          <option value="t3">الأستاذ محمد السالم</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">كلمة المرور</label>
+        <input type="password" class="form-input" id="teacherPass" placeholder="أدخل كلمة المرور" />
+      </div>
+    </div>
+
+    <button class="btn-login" onclick="doLogin()">دخول ←</button>
+    <p class="hint-text">للمعلمين: كلمة المرور الافتراضية هي <strong>1234</strong></p>
+  </div>
+</div>
+
+<!-- ====== STUDENT SCREEN ====== -->
+<div id="screen-student" class="screen">
+  <div class="student-header">
+    <div class="student-header-left">
+      <div class="s-logo">ق</div>
+      <div>
+        <div class="s-name" id="studentDisplayName">—</div>
+        <div class="s-group" id="studentDisplayGroup">—</div>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">خروج</button>
+  </div>
+
+  <div class="student-body">
+    <div class="ornament">﴾ وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا ﴿</div>
+
+    <!-- Today check-in card -->
+    <div class="card" id="checkinCard">
+      <div class="card-head">
+        <div class="card-title">📖 سجّل حفظك اليوم</div>
+        <span id="studentTodayDate" style="font-size:13px;color:var(--ink-3)"></span>
+      </div>
+      <div class="card-body">
+        <div class="surah-grid">
+          <div class="input-group">
+            <label>من سورة</label>
+            <select id="s_fromSurah" onchange="updateAyas('s_fromSurah','s_fromAya')">
+              <option value="">اختر</option>
+            </select>
+          </div>
+          <div class="arrow-mid">←</div>
+          <div class="input-group">
+            <label>إلى سورة</label>
+            <select id="s_toSurah" onchange="updateAyas('s_toSurah','s_toAya')">
+              <option value="">اختر</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="surah-grid" style="margin-bottom:0">
+          <div class="input-group">
+            <label>من آية</label>
+            <select id="s_fromAya"><option value="">—</option></select>
+          </div>
+          <div class="arrow-mid"></div>
+          <div class="input-group">
+            <label>إلى آية</label>
+            <select id="s_toAya"><option value="">—</option></select>
+          </div>
+        </div>
+
+        <div style="margin:20px 0 10px">
+          <div style="font-size:12px;font-weight:700;color:var(--ink-3);margin-bottom:10px">كيف كان أداؤك اليوم؟</div>
+          <div class="grade-grid">
+            <button class="grade-btn" id="g_excellent" onclick="selectGrade('ممتاز')">⭐⭐⭐<br>ممتاز</button>
+            <button class="grade-btn" id="g_good2" onclick="selectGrade('جيد جداً')">⭐⭐<br>جيد جداً</button>
+            <button class="grade-btn" id="g_good" onclick="selectGrade('جيد')">⭐<br>جيد</button>
+            <button class="grade-btn" id="g_review" onclick="selectGrade('يحتاج مراجعة')">🔄<br>مراجعة</button>
+          </div>
+        </div>
+
+        <div class="input-group" style="margin-bottom:16px">
+          <label>ملاحظة (اختياري)</label>
+          <textarea class="form-input" id="s_note" placeholder="أي ملاحظة على حفظك أو تلاوتك اليوم..."></textarea>
+        </div>
+
+        <button class="btn-submit" onclick="studentSubmit()">
+          <span>✅</span> تسجيل الجلسة
+        </button>
+
+        <div id="s_submitted" style="display:none;text-align:center;padding:24px 0">
+          <div style="font-size:40px;margin-bottom:12px">🌿</div>
+          <div style="font-size:17px;font-weight:800;color:var(--emerald);margin-bottom:6px">تم التسجيل بنجاح!</div>
+          <div style="font-size:13px;color:var(--ink-3)">بارك الله في حفظك اليوم</div>
+          <button class="btn-sm green" style="margin-top:16px" onclick="resetStudentForm()">تسجيل جلسة أخرى</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- My history -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">📅 سجل جلساتي</div>
+        <span class="badge badge-gray" id="mySessionCount">0 جلسة</span>
+      </div>
+      <div class="card-body" id="myHistoryList">
+        <div class="empty"><div class="empty-icon">📜</div><p>لا توجد جلسات مسجلة بعد</p></div>
+      </div>
+    </div>
+
+    <!-- My attendance -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">✅ سجل حضوري</div>
+        <span id="myAttRate" class="badge badge-green">—</span>
+      </div>
+      <div class="card-body" id="myAttList">
+        <div class="empty"><div class="empty-icon">📅</div><p>لا توجد سجلات حضور</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== TEACHER SCREEN ====== -->
+<div id="screen-teacher" class="screen">
+  <div class="teacher-topbar">
+    <div class="t-logo">ق</div>
+    <div class="t-brand">دار القرآن — لوحة المعلم</div>
+    <div class="t-tabs">
+      <button class="t-tab active" onclick="teacherTab('overview')">الرئيسية</button>
+      <button class="t-tab" onclick="teacherTab('review')">مراجعة الجلسات</button>
+      <button class="t-tab" onclick="teacherTab('attendance')">الحضور</button>
+      <button class="t-tab" onclick="teacherTab('students')">الطلاب</button>
+      <button class="t-tab" onclick="teacherTab('reports')">التقارير</button>
+    </div>
+    <button class="btn-logout" onclick="doLogout()" style="margin-right:0">خروج</button>
+  </div>
+
+  <div class="teacher-body">
+
+    <!-- OVERVIEW -->
+    <div id="t-overview" class="t-page active">
+      <div class="greeting">
+        <div class="greeting-icon">🌙</div>
+        <div>
+          <h2 id="teacherGreeting">مرحباً</h2>
+          <p id="teacherDateSub">جاري تحميل البيانات...</p>
+        </div>
+      </div>
+      <div class="stats-row" id="t_statsRow"></div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><div class="card-title">📖 آخر الجلسات المسجلة</div></div>
+          <div class="card-body" id="t_recentSessions"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">⚠️ غائبون اليوم</div><span class="badge badge-red" id="t_absentCount">0</span></div>
+          <div class="card-body" id="t_absentList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEW -->
+    <div id="t-review" class="t-page">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">📝 مراجعة جلسات اليوم</div>
+          <input type="date" id="reviewDate" style="border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;font-family:'Tajawal',sans-serif;font-size:13px;outline:none" onchange="renderReview()" />
+        </div>
+        <div class="card-body" id="reviewList"></div>
+      </div>
+    </div>
+
+    <!-- ATTENDANCE -->
+    <div id="t-attendance" class="t-page">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">✅ تسجيل الحضور</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="date" id="t_attDate" style="border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;font-family:'Tajawal',sans-serif;font-size:13px;outline:none" onchange="renderAttendance()" />
+            <button class="btn-sm green" onclick="markAll('present')">تحضير الكل</button>
+            <button class="btn-sm" onclick="saveAttendance()">💾 حفظ</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="att-grid" id="t_attGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENTS -->
+    <div id="t-students" class="t-page">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">👥 الطلاب</div>
+          <button class="btn-sm gold" onclick="showAddModal()">+ إضافة طالب</button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th><th>الاسم</th><th>الحلقة</th><th>الجلسات</th><th>آخر تسجيل</th><th>آخر سورة</th><th>الحضور</th><th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody id="t_studentsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div id="t-reports" class="t-page">
+      <div class="stats-row" id="t_reportStats"></div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">📊 تقرير شامل</div><button class="btn-sm" onclick="window.print()">🖨 طباعة</button></div>
+        <div class="card-body" style="padding:0">
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr><th>الطالب</th><th>الحلقة</th><th>الجلسات</th><th>آخر سورة</th><th>التقييم الأغلب</th><th>نسبة الحضور</th></tr>
+              </thead>
+              <tbody id="t_reportTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav">
+    <button class="active" onclick="teacherTab('overview')"><span>🏠</span><span>الرئيسية</span></button>
+    <button onclick="teacherTab('review')"><span>📝</span><span>المراجعة</span></button>
+    <button onclick="teacherTab('attendance')"><span>✅</span><span>الحضور</span></button>
+    <button onclick="teacherTab('students')"><span>👥</span><span>الطلاب</span></button>
+    <button onclick="teacherTab('reports')"><span>📊</span><span>تقارير</span></button>
+  </div>
+</div>
+
+<!-- ADD STUDENT MODAL -->
+<div class="modal-overlay hidden" id="addModal">
+  <div class="modal">
+    <h2>إضافة طالب جديد</h2>
+    <div class="form-group">
+      <label class="form-label">الاسم الكامل *</label>
+      <input class="form-input" id="m_name" placeholder="اسم الطالب" />
+    </div>
+    <div class="form-row-2">
+      <div class="form-group">
+        <label class="form-label">الحلقة</label>
+        <select class="form-input" id="m_group">
+          <option>حلقة الصباح</option>
+          <option>حلقة المساء</option>
+          <option>حلقة المتقدمين</option>
+          <option>حلقة المبتدئين</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">رقم الهاتف</label>
+        <input class="form-input" id="m_phone" placeholder="07..." />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">رمز الدخول للطالب (4 أرقام)</label>
+      <input class="form-input" id="m_pin" placeholder="مثال: 1234" maxlength="6" />
+    </div>
+    <div class="btn-row">
+      <button class="btn-cancel" onclick="hideAddModal()">إلغاء</button>
+      <button class="btn-save" onclick="addStudent()">إضافة ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const SURAHS = [
+  {n:"الفاتحة",v:7},{n:"البقرة",v:286},{n:"آل عمران",v:200},{n:"النساء",v:176},
+  {n:"المائدة",v:120},{n:"الأنعام",v:165},{n:"الأعراف",v:206},{n:"الأنفال",v:75},
+  {n:"التوبة",v:129},{n:"يونس",v:109},{n:"هود",v:123},{n:"يوسف",v:111},
+  {n:"الرعد",v:43},{n:"إبراهيم",v:52},{n:"الحجر",v:99},{n:"النحل",v:128},
+  {n:"الإسراء",v:111},{n:"الكهف",v:110},{n:"مريم",v:98},{n:"طه",v:135},
+  {n:"الأنبياء",v:112},{n:"الحج",v:78},{n:"المؤمنون",v:118},{n:"النور",v:64},
+  {n:"الفرقان",v:77},{n:"الشعراء",v:227},{n:"النمل",v:93},{n:"القصص",v:88},
+  {n:"العنكبوت",v:69},{n:"الروم",v:60},{n:"لقمان",v:34},{n:"السجدة",v:30},
+  {n:"الأحزاب",v:73},{n:"سبأ",v:54},{n:"فاطر",v:45},{n:"يس",v:83},
+  {n:"الصافات",v:182},{n:"ص",v:88},{n:"الزمر",v:75},{n:"غافر",v:85},
+  {n:"فصلت",v:54},{n:"الشورى",v:53},{n:"الزخرف",v:89},{n:"الدخان",v:59},
+  {n:"الجاثية",v:37},{n:"الأحقاف",v:35},{n:"محمد",v:38},{n:"الفتح",v:29},
+  {n:"الحجرات",v:18},{n:"ق",v:45},{n:"الذاريات",v:60},{n:"الطور",v:49},
+  {n:"النجم",v:62},{n:"القمر",v:55},{n:"الرحمن",v:78},{n:"الواقعة",v:96},
+  {n:"الحديد",v:29},{n:"المجادلة",v:22},{n:"الحشر",v:24},{n:"الممتحنة",v:13},
+  {n:"الصف",v:14},{n:"الجمعة",v:11},{n:"المنافقون",v:11},{n:"التغابن",v:18},
+  {n:"الطلاق",v:12},{n:"التحريم",v:12},{n:"الملك",v:30},{n:"القلم",v:52},
+  {n:"الحاقة",v:52},{n:"المعارج",v:44},{n:"نوح",v:28},{n:"الجن",v:28},
+  {n:"المزمل",v:20},{n:"المدثر",v:56},{n:"القيامة",v:40},{n:"الإنسان",v:31},
+  {n:"المرسلات",v:50},{n:"النبأ",v:40},{n:"النازعات",v:46},{n:"عبس",v:42},
+  {n:"التكوير",v:29},{n:"الانفطار",v:19},{n:"المطففين",v:36},{n:"الانشقاق",v:25},
+  {n:"البروج",v:22},{n:"الطارق",v:17},{n:"الأعلى",v:19},{n:"الغاشية",v:26},
+  {n:"الفجر",v:30},{n:"البلد",v:20},{n:"الشمس",v:15},{n:"الليل",v:21},
+  {n:"الضحى",v:11},{n:"الشرح",v:8},{n:"التين",v:8},{n:"العلق",v:19},
+  {n:"القدر",v:5},{n:"البينة",v:8},{n:"الزلزلة",v:8},{n:"العاديات",v:11},
+  {n:"القارعة",v:11},{n:"التكاثر",v:8},{n:"العصر",v:3},{n:"الهمزة",v:9},
+  {n:"الفيل",v:5},{n:"قريش",v:4},{n:"الماعون",v:7},{n:"الكوثر",v:3},
+  {n:"الكافرون",v:6},{n:"النصر",v:3},{n:"المسد",v:5},{n:"الإخلاص",v:4},
+  {n:"الفلق",v:5},{n:"الناس",v:6}
+];
+
+let DB = {
+  students: [],
+  sessions: [],
+  attendance: {}
+};
+
+function loadDB() {
+  const saved = localStorage.getItem('dq_v2');
+  if (saved) {
+    DB = JSON.parse(saved);
+  } else {
+    // seed data
+    DB.students = [
+      {id:1, name:'أحمد محمد العلي', group:'حلقة الصباح', phone:'0791234567', pin:'1111'},
+      {id:2, name:'عمر خالد الحسن', group:'حلقة الصباح', phone:'0792345678', pin:'2222'},
+      {id:3, name:'محمد يوسف النجار', group:'حلقة المساء', phone:'0793456789', pin:'3333'},
+      {id:4, name:'إبراهيم سعد القاسم', group:'حلقة المساء', phone:'', pin:'4444'},
+      {id:5, name:'عبدالله رياض منصور', group:'حلقة المتقدمين', phone:'', pin:'5555'},
+      {id:6, name:'زيد طارق إبراهيم', group:'حلقة المبتدئين', phone:'', pin:'6666'},
+      {id:7, name:'يوسف نبيل الأمين', group:'حلقة الصباح', phone:'', pin:'7777'},
+    ];
+    saveDB();
+  }
+}
+
+function saveDB() {
+  localStorage.setItem('dq_v2', JSON.stringify(DB));
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+let currentUser = null;
+let currentRole = null;
+let loginRoleMode = 'student';
+
+function setRole(r) {
+  loginRoleMode = r;
+  document.querySelectorAll('.role-tab').forEach((t,i)=>{
+    t.classList.toggle('active', (i===0&&r==='student')||(i===1&&r==='teacher'));
+  });
+  document.getElementById('login-student-form').style.display = r==='student'?'block':'none';
+  document.getElementById('login-teacher-form').style.display = r==='teacher'?'block':'none';
+}
+
+function doLogin() {
+  if (loginRoleMode === 'teacher') {
+    const sel = document.getElementById('teacherSelect').value;
+    const pass = document.getElementById('teacherPass').value;
+    if (!sel) return toast('❗ اختر اسمك');
+    if (pass !== '1234') return toast('❗ كلمة المرور غلط');
+    currentRole = 'teacher';
+    currentUser = {id: sel, name: document.getElementById('teacherSelect').selectedOptions[0].text};
+    showTeacherScreen();
+  } else {
+    const sel = document.getElementById('studentSelect').value;
+    if (!sel) return toast('❗ اختر اسمك');
+    const s = DB.students.find(x=>x.id==sel);
+    if (!s) return toast('❗ الطالب غير موجود');
+    currentRole = 'student';
+    currentUser = s;
+    showStudentScreen();
+  }
+}
+
+function doLogout() {
+  currentUser = null;
+  currentRole = null;
+  showScreen('login');
+}
+
+// ============================================================
+// SCREENS
+// ============================================================
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+}
+
+function showStudentScreen() {
+  showScreen('student');
+  document.getElementById('studentDisplayName').textContent = currentUser.name;
+  document.getElementById('studentDisplayGroup').textContent = currentUser.group;
+  document.getElementById('studentTodayDate').textContent = formatDate(todayStr());
+  populateSurahSelects(['s_fromSurah','s_toSurah']);
+  renderMyHistory();
+  renderMyAttendance();
+}
+
+function showTeacherScreen() {
+  showScreen('teacher');
+  const hr = new Date().getHours();
+  const greet = hr < 12 ? 'صباح الخير' : hr < 17 ? 'مساء الخير' : 'مساء النور';
+  document.getElementById('teacherGreeting').textContent = greet + '، ' + currentUser.name;
+  document.getElementById('teacherDateSub').textContent = formatDate(todayStr()) + ' — ' + DB.students.length + ' طالب مسجل';
+  document.getElementById('reviewDate').value = todayStr();
+  document.getElementById('t_attDate').value = todayStr();
+  renderTeacherOverview();
+  renderStudentsTable();
+  renderReports();
+}
+
+// ============================================================
+// SURAH SELECT
+// ============================================================
+function populateSurahSelects(ids) {
+  ids.forEach(id=>{
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    sel.innerHTML = '<option value="">— اختر السورة —</option>' +
+      SURAHS.map((s,i)=>`<option value="${i}">${i+1}. ${s.n}</option>`).join('');
+  });
+}
+
+function updateAyas(surahId, ayaId) {
+  const idx = document.getElementById(surahId).value;
+  const sel = document.getElementById(ayaId);
+  if (idx === '') { sel.innerHTML = '<option>—</option>'; return; }
+  sel.innerHTML = Array.from({length:SURAHS[idx].v},(_,i)=>
+    `<option value="${i+1}">آية ${i+1}</option>`).join('');
+}
+
+// ============================================================
+// STUDENT ACTIONS
+// ============================================================
+let selectedGrade = '';
+
+function selectGrade(g) {
+  selectedGrade = g;
+  const map = {'ممتاز':'excellent','جيد جداً':'good2','جيد':'good','يحتاج مراجعة':'review'};
+  const ids = ['g_excellent','g_good2','g_good','g_review'];
+  const grades = ['ممتاز','جيد جداً','جيد','يحتاج مراجعة'];
+  ids.forEach((id,i)=>{
+    const btn = document.getElementById(id);
+    btn.className = 'grade-btn';
+    if (grades[i]===g) btn.classList.add('sel-'+map[g]);
+  });
+}
+
+function studentSubmit() {
+  const fromIdx = document.getElementById('s_fromSurah').value;
+  const toIdx = document.getElementById('s_toSurah').value;
+  if (!fromIdx || !toIdx) return toast('❗ حدد السورة');
+  if (!selectedGrade) return toast('❗ اختر تقييم حفظك');
+
+  const session = {
+    id: Date.now(),
+    studentId: currentUser.id,
+    date: todayStr(),
+    fromSurahIdx: parseInt(fromIdx),
+    fromSurah: SURAHS[fromIdx].n,
+    fromAya: document.getElementById('s_fromAya').value,
+    toSurahIdx: parseInt(toIdx),
+    toSurah: SURAHS[toIdx].n,
+    toAya: document.getElementById('s_toAya').value,
+    grade: selectedGrade,
+    studentNote: document.getElementById('s_note').value.trim(),
+    teacherNote: '',
+    teacherReviewed: false,
+    timestamp: Date.now()
+  };
+
+  DB.sessions.unshift(session);
+  saveDB();
+
+  document.getElementById('checkinCard').querySelector('.card-body').innerHTML =
+    document.getElementById('s_submitted').outerHTML;
+  document.getElementById('s_submitted').style.display = 'block';
+
+  renderMyHistory();
+  toast('✅ تم تسجيل جلستك');
+}
+
+function resetStudentForm() {
+  showStudentScreen();
+}
+
+function renderMyHistory() {
+  const mine = DB.sessions.filter(s=>s.studentId==currentUser.id);
+  document.getElementById('mySessionCount').textContent = mine.length + ' جلسة';
+  if (!mine.length) {
+    document.getElementById('myHistoryList').innerHTML =
+      '<div class="empty"><div class="empty-icon">📜</div><p>لا توجد جلسات بعد</p></div>';
+    return;
+  }
+  document.getElementById('myHistoryList').innerHTML = mine.slice(0,10).map(s=>`
+    <div class="history-item">
+      <div class="h-dot ${dotClass(s.grade)}"></div>
+      <div class="h-content">
+        <div class="h-title">${s.fromSurah} آية ${s.fromAya||'—'} → ${s.toSurah} آية ${s.toAya||'—'}</div>
+        <div class="h-sub">
+          <span>${formatDate(s.date)}</span>
+          <span class="badge ${badgeClass(s.grade)}">${s.grade}</span>
+          ${s.teacherNote ? `<span class="badge badge-purple">💬 تعليق المعلم</span>` : ''}
+        </div>
+        ${s.teacherNote ? `<div class="teacher-note">💬 ${s.teacherNote}</div>` : ''}
+        ${s.studentNote ? `<div style="font-size:12px;color:var(--ink-3);margin-top:6px">📝 ${s.studentNote}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderMyAttendance() {
+  const dates = Object.keys(DB.attendance).sort((a,b)=>b.localeCompare(a)).slice(0,10);
+  if (!dates.length) return;
+  const present = dates.filter(d=>DB.attendance[d]?.[currentUser.id]==='present').length;
+  const rate = Math.round(present/dates.length*100);
+  document.getElementById('myAttRate').textContent = rate + '% حضور';
+  document.getElementById('myAttList').innerHTML = dates.map(d=>{
+    const status = DB.attendance[d]?.[currentUser.id];
+    return `<div class="attendance-row">
+      <div class="att-date">${formatDate(d)}</div>
+      <div class="att-status" style="color:${status==='present'?'var(--emerald)':status==='absent'?'var(--ruby)':'var(--ink-4)'}">
+        ${status==='present'?'✅ حاضر':status==='absent'?'❌ غائب':'— غير مسجل'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// TEACHER TABS
+// ============================================================
+function teacherTab(name) {
+  document.querySelectorAll('.t-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.t-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('t-'+name).classList.add('active');
+  const map = {overview:0,review:1,attendance:2,students:3,reports:4};
+  const tabs = document.querySelectorAll('.t-tab');
+  const mbtns = document.querySelectorAll('.mobile-nav button');
+  if (tabs[map[name]]) tabs[map[name]].classList.add('active');
+  if (mbtns[map[name]]) mbtns[map[name]].classList.add('active');
+
+  if (name==='review') renderReview();
+  if (name==='attendance') renderAttendance();
+  if (name==='students') renderStudentsTable();
+  if (name==='reports') renderReports();
+}
+
+// ============================================================
+// TEACHER OVERVIEW
+// ============================================================
+function renderTeacherOverview() {
+  const today = todayStr();
+  const todayAtt = DB.attendance[today] || {};
+  const present = Object.values(todayAtt).filter(v=>v==='present').length;
+  const absent = Object.values(todayAtt).filter(v=>v==='absent').length;
+  const todaySess = DB.sessions.filter(s=>s.date===today).length;
+  const pending = DB.sessions.filter(s=>!s.teacherReviewed).length;
+
+  document.getElementById('t_statsRow').innerHTML = `
+    <div class="stat-box"><div class="stat-num">${DB.students.length}</div><div class="stat-lbl">إجمالي الطلاب</div></div>
+    <div class="stat-box"><div class="stat-num">${present}</div><div class="stat-lbl">حاضر اليوم</div></div>
+    <div class="stat-box"><div class="stat-num">${absent}</div><div class="stat-lbl">غائب اليوم</div></div>
+    <div class="stat-box"><div class="stat-num">${todaySess}</div><div class="stat-lbl">جلسات اليوم</div></div>
+    <div class="stat-box" style="border-color:${pending>0?'var(--gold)':'var(--border)'}">
+      <div class="stat-num" style="color:${pending>0?'var(--gold)':'var(--emerald)'}">${pending}</div>
+      <div class="stat-lbl">تنتظر مراجعتك</div>
+    </div>
+  `;
+
+  const recent = DB.sessions.slice(0,5);
+  document.getElementById('t_recentSessions').innerHTML = recent.length ? recent.map(s=>{
+    const st = DB.students.find(x=>x.id==s.studentId);
+    return `<div class="history-item">
+      <div class="student-chip">${initials(st?.name||'؟')}</div>
+      <div class="h-content">
+        <div class="h-title" style="font-size:13px">${st?.name||'محذوف'}</div>
+        <div class="h-sub">${s.fromSurah} → ${s.toSurah} &nbsp;·&nbsp; ${s.date} &nbsp;·&nbsp; <span class="badge ${badgeClass(s.grade)}">${s.grade}</span></div>
+      </div>
+    </div>`;
+  }).join('') : '<div class="empty"><div class="empty-icon">📖</div><p>لا توجد جلسات بعد</p></div>';
+
+  const absentStudents = DB.students.filter(s=>todayAtt[s.id]==='absent');
+  document.getElementById('t_absentCount').textContent = absentStudents.length;
+  document.getElementById('t_absentList').innerHTML = absentStudents.length
+    ? absentStudents.map(s=>`<div class="history-item">
+        <div class="student-chip" style="background:var(--ruby)">${initials(s.name)}</div>
+        <div class="h-content"><div class="h-title" style="font-size:13px">${s.name}</div><div class="h-sub">${s.group}</div></div>
+      </div>`).join('')
+    : '<div class="empty"><div class="empty-icon">✅</div><p>لا غيابات مسجلة اليوم</p></div>';
+}
+
+// ============================================================
+// REVIEW
+// ============================================================
+function renderReview() {
+  const date = document.getElementById('reviewDate').value;
+  const daySessions = DB.sessions.filter(s=>s.date===date);
+  if (!daySessions.length) {
+    document.getElementById('reviewList').innerHTML =
+      '<div class="empty"><div class="empty-icon">📋</div><p>لا توجد جلسات مسجلة لهذا اليوم</p></div>';
+    return;
+  }
+  document.getElementById('reviewList').innerHTML = daySessions.map(s=>{
+    const st = DB.students.find(x=>x.id==s.studentId);
+    return `<div class="review-row" id="rv_${s.id}">
+      <div class="review-header">
+        <div class="student-chip">${initials(st?.name||'؟')}</div>
+        <div class="review-name">${st?.name||'محذوف'}</div>
+        <span class="badge ${badgeClass(s.grade)}">${s.grade}</span>
+        ${s.teacherReviewed ? '<span class="badge badge-green">✓ راجعت</span>' : '<span class="badge badge-gray">لم تراجع</span>'}
+      </div>
+      <div class="review-meta" style="margin-bottom:8px">
+        📖 ${s.fromSurah} آية ${s.fromAya||'—'} → ${s.toSurah} آية ${s.toAya||'—'}
+        ${s.studentNote ? `<br>📝 ملاحظة الطالب: <em>${s.studentNote}</em>` : ''}
+      </div>
+      <div>
+        <textarea class="note-input" id="note_${s.id}" placeholder="اكتب ملاحظتك للطالب...">${s.teacherNote||''}</textarea>
+        <div class="review-actions">
+          <button class="btn-ai" onclick="genAINote(${s.id},'${st?.name||''}','${s.fromSurah}','${s.toSurah}','${s.grade}')">✨ ملاحظة AI</button>
+          <button class="btn-sm green" onclick="saveReview(${s.id})">💾 حفظ الملاحظة</button>
+          <button class="btn-sm" onclick="setGrade(${s.id},'ممتاز')">⭐⭐⭐ ممتاز</button>
+          <button class="btn-sm" onclick="setGrade(${s.id},'جيد جداً')">⭐⭐ جيد جداً</button>
+          <button class="btn-sm" onclick="setGrade(${s.id},'يحتاج مراجعة')">🔄 مراجعة</button>
+        </div>
+        <div id="ai_${s.id}"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveReview(sessionId) {
+  const s = DB.sessions.find(x=>x.id==sessionId);
+  if (!s) return;
+  s.teacherNote = document.getElementById('note_'+sessionId).value.trim();
+  s.teacherReviewed = true;
+  saveDB();
+  renderReview();
+  toast('✅ تم حفظ الملاحظة');
+}
+
+function setGrade(sessionId, grade) {
+  const s = DB.sessions.find(x=>x.id==sessionId);
+  if (!s) return;
+  s.grade = grade;
+  saveDB();
+  renderReview();
+  toast('✅ تم تعديل التقييم');
+}
+
+async function genAINote(sessionId, studentName, fromSurah, toSurah, grade) {
+  const box = document.getElementById('ai_'+sessionId);
+  box.innerHTML = '<div class="ai-box" style="opacity:0.6">⏳ جاري التوليد...</div>';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 250,
+        messages: [{
+          role: 'user',
+          content: `أنت معلم قرآن كريم. اكتب ملاحظة مشجعة وقصيرة (3 جمل) للطالب "${studentName}" الذي حفظ من سورة ${fromSurah} إلى سورة ${toSurah} وتقييمه "${grade}". اكتب بالعربية الفصحى مباشرة دون مقدمة.`
+        }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(c=>c.text||'').join('') || 'تعذر التوليد';
+    box.innerHTML = `<div class="ai-box">
+      <div class="ai-box-header">✨ مقترح الذكاء الاصطناعي <button class="btn-sm green" style="font-size:11px;padding:3px 10px" onclick="useAI(${sessionId})">استخدام ←</button></div>
+      <span id="ai_text_${sessionId}">${text}</span>
+    </div>`;
+  } catch(e) {
+    box.innerHTML = '<div class="ai-box" style="background:#fdf0f0;border-color:#fca5a5;color:var(--ruby)">⚠️ تعذر الاتصال بالذكاء الاصطناعي</div>';
+  }
+}
+
+function useAI(sessionId) {
+  const t = document.getElementById('ai_text_'+sessionId);
+  if (t) document.getElementById('note_'+sessionId).value = t.textContent;
+  document.getElementById('ai_'+sessionId).innerHTML = '';
+  toast('✅ تم نقل الملاحظة');
+}
+
+// ============================================================
+// ATTENDANCE (Teacher)
+// ============================================================
+function renderAttendance() {
+  const d = document.getElementById('t_attDate').value;
+  const att = DB.attendance[d] || {};
+  document.getElementById('t_attGrid').innerHTML = DB.students.map(s=>`
+    <div class="att-card">
+      <div class="student-chip">${initials(s.name)}</div>
+      <div class="att-name">${s.name}<small>${s.group}</small></div>
+      <div class="att-btns">
+        <button id="p_${s.id}" class="${att[s.id]==='present'?'present':''}" onclick="toggleAtt(${s.id},'present')">✓</button>
+        <button id="a_${s.id}" class="${att[s.id]==='absent'?'absent':''}" onclick="toggleAtt(${s.id},'absent')">✗</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleAtt(id, status) {
+  const d = document.getElementById('t_attDate').value;
+  if (!DB.attendance[d]) DB.attendance[d] = {};
+  DB.attendance[d][id] = status;
+  document.getElementById('p_'+id).className = status==='present'?'present':'';
+  document.getElementById('a_'+id).className = status==='absent'?'absent':'';
+}
+
+function markAll(status) {
+  const d = document.getElementById('t_attDate').value;
+  if (!DB.attendance[d]) DB.attendance[d] = {};
+  DB.students.forEach(s=>{ DB.attendance[d][s.id] = status; });
+  renderAttendance();
+}
+
+function saveAttendance() {
+  saveDB();
+  toast('✅ تم حفظ الحضور');
+  renderTeacherOverview();
+}
+
+// ============================================================
+// STUDENTS TABLE
+// ============================================================
+function renderStudentsTable() {
+  document.getElementById('t_studentsTable').innerHTML = DB.students.map((s,i)=>{
+    const sts = DB.sessions.filter(x=>x.studentId==s.id);
+    const last = sts[0];
+    const allDates = Object.keys(DB.attendance);
+    const pct = allDates.length
+      ? Math.round(allDates.filter(d=>DB.attendance[d]?.[s.id]==='present').length/allDates.length*100)
+      : 100;
+    return `<tr>
+      <td>${i+1}</td>
+      <td><strong>${s.name}</strong></td>
+      <td><span class="badge badge-gray">${s.group}</span></td>
+      <td>${sts.length}</td>
+      <td>${last?last.date:'—'}</td>
+      <td>${last?last.toSurah:'—'}</td>
+      <td>
+        <div style="font-size:13px;font-weight:700;color:${pct>=80?'var(--emerald)':'var(--ruby)'}">${pct}%</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      </td>
+      <td><button class="btn-sm red" onclick="delStudent(${s.id})">حذف</button></td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--ink-4);padding:24px">لا يوجد طلاب</td></tr>';
+}
+
+function delStudent(id) {
+  const s = DB.students.find(x=>x.id==id);
+  if (!confirm('حذف ' + s.name + '؟')) return;
+  DB.students = DB.students.filter(x=>x.id!=id);
+  saveDB();
+  renderStudentsTable();
+  populateStudentLogin();
+  toast('🗑 تم الحذف');
+}
+
+// ============================================================
+// ADD STUDENT
+// ============================================================
+function showAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
+function hideAddModal() { document.getElementById('addModal').classList.add('hidden'); }
+
+function addStudent() {
+  const name = document.getElementById('m_name').value.trim();
+  if (!name) return toast('❗ أدخل الاسم');
+  const s = {
+    id: Date.now(),
+    name,
+    group: document.getElementById('m_group').value,
+    phone: document.getElementById('m_phone').value,
+    pin: document.getElementById('m_pin').value || '0000'
+  };
+  DB.students.push(s);
+  saveDB();
+  hideAddModal();
+  renderStudentsTable();
+  populateStudentLogin();
+  ['m_name','m_phone','m_pin'].forEach(id=>document.getElementById(id).value='');
+  toast('✅ تمت إضافة الطالب: ' + name);
+}
+
+// ============================================================
+// REPORTS
+// ============================================================
+function renderReports() {
+  const totalSess = DB.sessions.length;
+  const excellent = DB.sessions.filter(s=>s.grade==='ممتاز').length;
+  const reviewed = DB.sessions.filter(s=>s.teacherReviewed).length;
+  const pending = DB.sessions.filter(s=>!s.teacherReviewed).length;
+
+  document.getElementById('t_reportStats').innerHTML = `
+    <div class="stat-box"><div class="stat-num">${DB.students.length}</div><div class="stat-lbl">طلاب</div></div>
+    <div class="stat-box"><div class="stat-num">${totalSess}</div><div class="stat-lbl">إجمالي الجلسات</div></div>
+    <div class="stat-box"><div class="stat-num">${excellent}</div><div class="stat-lbl">تقييم ممتاز</div></div>
+    <div class="stat-box"><div class="stat-num">${reviewed}</div><div class="stat-lbl">جلسات راجعتها</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:${pending>0?'var(--gold)':'var(--emerald)'}">${pending}</div><div class="stat-lbl">تنتظر المراجعة</div></div>
+  `;
+
+  document.getElementById('t_reportTable').innerHTML = DB.students.map(s=>{
+    const sts = DB.sessions.filter(x=>x.studentId==s.id);
+    const last = sts[0];
+    const grades = sts.map(x=>x.grade);
+    const topGrade = grades.length
+      ? Object.entries(grades.reduce((a,g)=>{a[g]=(a[g]||0)+1;return a;},{}))
+          .sort((a,b)=>b[1]-a[1])[0][0]
+      : '—';
+    const allDates = Object.keys(DB.attendance);
+    const pct = allDates.length
+      ? Math.round(allDates.filter(d=>DB.attendance[d]?.[s.id]==='present').length/allDates.length*100)
+      : 100;
+    return `<tr>
+      <td><strong>${s.name}</strong></td>
+      <td>${s.group}</td>
+      <td>${sts.length}</td>
+      <td>${last?last.toSurah:s.lastMemorized||'—'}</td>
+      <td>${topGrade!=='—'?`<span class="badge ${badgeClass(topGrade)}">${topGrade}</span>`:'—'}</td>
+      <td><span style="font-weight:700;color:${pct>=80?'var(--emerald)':'var(--ruby)'}">${pct}%</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// POPULATE LOGIN SELECTS
+// ============================================================
+function populateStudentLogin() {
+  const sel = document.getElementById('studentSelect');
+  sel.innerHTML = '<option value="">— اختر اسمك —</option>' +
+    DB.students.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+
+function formatDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d);
+  return dt.toLocaleDateString('ar-JO', {weekday:'short', day:'numeric', month:'long'});
+}
+
+function initials(name) {
+  return (name||'').trim().split(' ').slice(0,2).map(p=>p[0]||'').join('');
+}
+
+function dotClass(g) {
+  return {ممتاز:'excellent','جيد جداً':'good2','جيد':'good','يحتاج مراجعة':'review'}[g]||'good';
+}
+
+function badgeClass(g) {
+  return {ممتاز:'badge-gold','جيد جداً':'badge-green','جيد':'badge-blue','يحتاج مراجعة':'badge-red'}[g]||'badge-gray';
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadDB();
+populateStudentLogin();
+populateSurahSelects(['s_fromSurah','s_toSurah']);
+</script>
+</body>
+</html>
